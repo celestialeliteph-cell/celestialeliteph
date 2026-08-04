@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celestial Elite</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    
+
+</head>
+
+<body id="top">
+
+    <!-- ==========================
+         NAVBAR
+    =========================== -->
+
+    <header>
+
+    <nav class="navbar">
+
+        <h2 class="logo">CELESTIAL ELITE</h2>
+
+        <ul class="nav-links">
+            <a href="#top">Home</a></li>
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+
+            <li>
+    <button id="cart-btn" type="button">
+     CART (<span id="cart-count">0</span>)
+</button>
+</li>
+
+</ul>
+
+</nav>
+
+</header>
+
+    <!-- ==========================
+         HERO
+    =========================== -->
+
+    <section class="hero">
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+
+            <h1>Your Aura<br>Among the Galaxies.</h1>
+
+            <p>
+                Discover premium-inspired fragrances crafted to elevate your presence.
+                Every scent is designed to leave a lasting impression wherever your journey takes you.
+            </p>
+
+            <a href="#collection" class="hero-btn">
+                Explore Collection
+            </a>
+
+            <div class="scroll-indicator">
+
+                <span>Scroll</span>
+
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+<section class="about reveal" id="about">
+
+    <div class="about-content">
+
+        <h2>About Celestial Elite</h2>
+
+        <p>
+            Celestial Elite is a luxury-inspired fragrance brand created for individuals
+            who appreciate elegance, confidence, and timeless sophistication.
+            Every bottle is carefully crafted using premium-quality fragrance oils to
+            deliver a long-lasting scent that complements every occasion.
+        </p>
+
+    </div>
+
+</section>
+
+
+    <!-- ==========================
+     FEATURED COLLECTION
+=========================== -->
+
+<section class="collection reveal" id="collection">
+
+    <h2>Featured Collection</h2>
+
+    <p>
+        Discover our signature luxury fragrances.
+    </p>
+
+
+    <div class="product-container">
+
+
+        <!-- ================= QUAVOR ================= -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <img 
+                src="assets/images/quavor.jpg"
+                class="zoom-img"
+                data-images="assets/images/quavor.jpg,assets/images/quavorwithbox.jpg"
+                onclick="openZoom(this)"
+                alt="Quavor">
+
+            </div>
+
+
+            <h3>Quavor</h3>
+
+            <p class="price">₱379</p>
+
+
+            <div class="quantity">
+
+                <button class="minus">
+                    −
+                </button>
+
+                <input 
+                type="number" 
+                value="0" 
+                min="0">
+
+                <button class="plus">
+                    +
+                </button>
+
+            </div>
+
+
+            <button 
+            class="add-cart"
+            data-name="Quavor"
+            data-price="379">
+
+                Add to Cart
+
+            </button>
+
+
+        </div>
+
+
+
+
+
+        <!-- ================= ZEPHYROS ================= -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <img 
+                src="assets/images/zephyros.jpg"
+                class="zoom-img"
+                data-images="assets/images/zephyros.jpg,assets/images/zephyroswithbox.jpg"
+                onclick="openZoom(this)"
+                alt="Zephyros">
+
+            </div>
+
+
+            <h3>Zephyros</h3>
+
+            <p class="price">₱359</p>
+
+
+            <div class="quantity">
+
+                <button class="minus">
+                    −
+                </button>
+
+                <input 
+                type="number" 
+                value="0" 
+                min="0">
+
+                <button class="plus">
+                    +
+                </button>
+
+            </div>
+
+
+            <button 
+            class="add-cart"
+            data-name="Zephyros"
+            data-price="359">
+
+                Add to Cart
+
+            </button>
+
+
+        </div>
+
+
+
+
+
+        <!-- ================= SATRIAN ================= -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <img 
+                src="assets/images/satrian.jpg"
+                class="zoom-img"
+                data-images="assets/images/satrian.jpg,assets/images/satrianwithbox.jpg"
+                onclick="openZoom(this)"
+                alt="Satrian">
+
+            </div>
+
+
+            <h3>Satrian</h3>
+
+            <p class="price">₱389</p>
+
+
+            <div class="quantity">
+
+                <button class="minus">
+                    −
+                </button>
+
+
+                <input 
+                type="number" 
+                value="0" 
+                min="0">
+
+
+                <button class="plus">
+                    +
+                </button>
+
+            </div>
+
+
+            <button 
+            class="add-cart"
+            data-name="Satrian"
+            data-price="389">
+
+                Add to Cart
+
+            </button>
+
+
+        </div>
+
+
+
+
+
+        <!-- ================= ELUNARA ================= -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <img 
+                src="assets/images/elunara.jpg"
+                class="zoom-img"
+                data-images="assets/images/elunara.jpg,assets/images/elunarawithbox.jpg"
+                onclick="openZoom(this)"
+                alt="Elunara">
+
+            </div>
+
+
+            <h3>Elunara</h3>
+
+
+            <p class="price">
+                ₱389
+            </p>
+
+
+
+            <div class="quantity">
+
+                <button class="minus">
+                    −
+                </button>
+
+
+                <input 
+                type="number" 
+                value="0" 
+                min="0">
+
+
+                <button class="plus">
+                    +
+                </button>
+
+
+            </div>
+
+
+
+            <button 
+            class="add-cart"
+            data-name="Elunara"
+            data-price="389">
+
+                Add to Cart
+
+            </button>
+
+
+        </div>
+
+
+
+
+
+        <!-- ================= KALEXIS ================= -->
+
+        <div class="product-card">
+
+
+            <div class="product-image">
+
+
+                <img 
+                src="assets/images/kalexis.jpg"
+                class="zoom-img"
+                data-images="assets/images/kalexis.jpg,assets/images/kalexiswithbox.jpg"
+                onclick="openZoom(this)"
+                alt="Kalexis">
+
+
+            </div>
+
+
+            <h3>
+                Kalexis
+            </h3>
+
+
+            <p class="price">
+                ₱359
+            </p>
+
+
+
+            <div class="quantity">
+
+
+                <button class="minus">
+                    −
+                </button>
+
+
+
+                <input 
+                type="number" 
+                value="0" 
+                min="0">
+
+
+
+                <button class="plus">
+                    +
+                </button>
+
+
+            </div>
+
+
+
+            <button 
+            class="add-cart"
+            data-name="Kalexis"
+            data-price="359">
+
+
+                Add to Cart
+
+
+            </button>
+
+
+        </div>
+
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+<!-- ==========================
+     IMAGE ZOOM VIEWER
+========================== -->
+
+<div class="image-modal" id="image-modal">
+
+
+    <span class="close-image" onclick="closeZoom()">
+        ✕
+    </span>
+
+
+    <button class="prev-btn" onclick="prevImage()">
+        ❮
+    </button>
+
+
+    <img id="zoom-image">
+
+
+    <button class="next-btn" onclick="nextImage()">
+        ❯
+    </button>
+
+
+</div>
+
+    <!-- =========================
+     WHY CHOOSE US
+========================= -->
+
+<section class="features reveal" id="features">
+
+    <h2>Why Choose Celestial Elite</h2>
+
+    <div class="feature-container">
+
+        <div class="feature-card">
+            <div class="feature-icon"></div>
+
+            <h3>Premium Quality</h3>
+
+            <p>
+                Crafted with premium fragrance oils for a long-lasting scent.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon"></div>
+
+            <h3>Fast Delivery</h3>
+
+            <p>
+                Carefully packed and delivered safely across the Philippines.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon"></div>
+
+            <h3>Luxury Experience</h3>
+
+            <p>
+                Designed for elegance, confidence, and unforgettable moments.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ORDER FORM
+========================= -->
+
+<section class="fillup reveal" id="contact">
+
+    <div class="fillup-container">
+
+        <h2>
+            Order Your Favorite Scent
+        </h2>
+
+
+        <p>
+            Fill up the form below and we'll contact you for your order.
+        </p>
+
+
+
+        <div class="order-form">
+
+            <div class="input-box">
+
+                <input 
+                id="customer-name"
+                type="text" 
+                placeholder="Full Name"
+                required>
+
+            </div>
+
+
+
+            <div class="input-box">
+
+                <input 
+                id="customer-email"
+                type="email" 
+                placeholder="Email Address"
+                required>
+
+            </div>
+
+
+
+            <div class="input-box">
+
+                <input 
+                id="customer-phone"
+                type="tel" 
+                placeholder="Contact Number"
+                required>
+
+            </div>
+
+
+
+
+            <div class="input-box">
+    <textarea
+    id="order-message"
+    placeholder="Order Details"
+    readonly></textarea>
+</div>
+
+<div class="input-box">
+    <input
+    id="order-id"
+    type="text"
+    value="Will be generated automatically"
+    readonly>
+</div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer reveal">
+
+
+    <div class="footer-content">
+
+
+        <h2>
+            CELESTIAL ELITE
+        </h2>
+
+
+
+        <p>
+
+            Crafting luxurious fragrances inspired by elegance,
+            confidence, and timeless sophistication.
+
+        </p>
+
+
+
+        <ul class="footer-links">
+
+            <li>
+                <a href="#">
+                    Home
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#collection">
+                    Collection
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#about">
+                    About
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#contact">
+                    Contact
+                </a>
+            </li>
+
+
+        </ul>
+
+
+
+        <span>
+            © 2026 Celestial Elite. All Rights Reserved.
+        </span>
+
+
+    </div>
+
+
+</footer>
+
+
+
+
+<!-- =========================
+     CART SIDEBAR
+========================= -->
+
+<div class="cart-sidebar" id="cart-sidebar">
+
+    <div class="cart-header">
+
+        <h2>Shopping Cart</h2>
+
+        <button id="close-cart">✕</button>
+
+    </div>
+
+
+    <div class="cart-items">
+
+    </div>
+
+
+    <div class="cart-footer">
+
+        <h3>
+            Total:
+            <span id="cart-total">₱0</span>
+        </h3>
+
+
+        <button class="checkout-btn" id="checkout-btn">
+            Request Your Fragrance
+        </button>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+
+
+
+
+<!-- JavaScript -->
+<script src="assets/js/script.js"></script>
+
+
+</body>
+</html>
+
