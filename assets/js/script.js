@@ -4,7 +4,6 @@ console.log("Celestial Elite Loaded!");
 // Google Apps Script Web App
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-_pFSyeq2E210nUpevqNeM_vKYOaHUFzmr3OIGghOLrIcOgmjwwU1uUXtZQCjR7rzhQ/exec";
 
-
 const phoneInput = document.getElementById("customer-phone");
 
 if (phoneInput) {
@@ -538,6 +537,56 @@ orderText += `Contact: ${phone}`;
    let messengerURL =
 "https://m.me/61572153625118?text=" +
 encodeURIComponent(orderText);
+
+// ===============================
+// SAVE ORDER TO GOOGLE SHEET
+// ===============================
+
+const orderData = {
+
+    orderId: orderID,
+
+    customer: name,
+
+    email: email,
+
+    phone: phone,
+
+    products: orderText,
+
+    total: total,
+
+    messenger: messengerURL
+
+};
+
+
+fetch(SCRIPT_URL, {
+
+    method: "POST",
+
+    body: JSON.stringify(orderData),
+
+    headers: {
+
+        "Content-Type": "application/json"
+
+    }
+
+})
+.then(response => response.json())
+.then(data => {
+
+    console.log("Order Saved:", data);
+
+})
+.catch(error => {
+
+    console.error("Save Error:", error);
+
+});
+
+
 
 // Open Messenger
 const messenger = window.open(messengerURL, "_blank");
