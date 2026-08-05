@@ -632,7 +632,7 @@ if(result.success){
 
 
 window.location.href =
-"order-confirmation.html?order=" 
+"/celestialeliteph/order-confirmation.html?order=" 
 + encodeURIComponent(orderText);
 
 
@@ -661,7 +661,7 @@ window.location.href =
 
 
     window.location.href =
-    "order-confirmation.html?order=" 
+    "/celestialeliteph/order-confirmation.html?order="
     + encodeURIComponent(orderText);
 
 
@@ -674,7 +674,7 @@ window.location.href =
     console.error(error);
 
     window.location.href =
-    "order-confirmation.html?order=" 
+    "/celestialeliteph/order-confirmation.html?order="
     + encodeURIComponent(orderText);
 
 }
