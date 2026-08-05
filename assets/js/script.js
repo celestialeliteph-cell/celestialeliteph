@@ -1,6 +1,10 @@
 console.log("Celestial Elite Loaded!");
 
 
+// Google Apps Script Web App
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-_pFSyeq2E210nUpevqNeM_vKYOaHUFzmr3OIGghOLrIcOgmjwwU1uUXtZQCjR7rzhQ/exec";
+
+
 const phoneInput = document.getElementById("customer-phone");
 
 if (phoneInput) {
