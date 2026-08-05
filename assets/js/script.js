@@ -544,7 +544,7 @@ Contact: ${phone}
 
 
 let messengerURL =
-"https://m.me/61572153625118?text=" +
+"https://m.me/61572153625118";
 encodeURIComponent(orderText);
 
 
@@ -588,7 +588,7 @@ let response = await fetch(SCRIPT_URL,{
 
     headers:{
 
-        "Content-Type":"application/json"
+        "Content-Type":"text/plain;charset=utf-8"
 
     },
 
