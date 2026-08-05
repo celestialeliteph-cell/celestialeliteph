@@ -5,7 +5,7 @@ console.log("Celestial Elite Loaded!");
 // GOOGLE APPS SCRIPT
 // ===============================
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-_pFSyeq2E210nUpevqNeM_vKYOaHUFzmr3OIGghOLrIcOgmjwwU1uUXtZQCjR7rzhQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLKqiLLZ45F9YRLFR-m1UR7p6ZaabVxrFnh7GCPiY1oIMI1AEVB0kN1k3CTb9qAY5pmA/exec";
 
 
 // ===============================
@@ -788,72 +788,30 @@ Contact: ${phone}`;
 
 
 
-    try{
+    try {
 
+    await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(orderData)
+    });
 
-        let response = await fetch(SCRIPT_URL,{
+    showToast("Order saved successfully!");
 
-            method:"POST",
+    cart = [];
+    saveCart();
 
-            headers:{
+    window.location.href =
+"order-confirmation.html?order=" +
+encodeURIComponent(orderText);
 
-                "Content-Type":"application/json"
+} catch(error) {
 
-            },
+    console.error(error);
 
-            body:JSON.stringify(orderData)
+    showToast("Google Sheet connection failed.");
 
-
-        });
-
-
-
-
-        let result = await response.json();
-
-
-
-
-        if(result.success){
-
-
-            showToast("Order saved successfully!");
-
-
-            cart=[];
-
-
-            saveCart();
-
-
-
-            window.location.href =
-            "/celestialeliteph/order-confirmation.html?order="
-            +encodeURIComponent(orderText);
-
-
-
-        }else{
-
-
-            showToast("Order failed.");
-
-        }
-
-
-
-
-
-    }catch(error){
-
-
-        console.error(error);
-
-
-        showToast("Google Sheet connection failed.");
-
-
-    }
+}
 
 
 
