@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Order Confirmed - Celestial Elite</title>
+
+<style>
+
+body{
+    background:#061b12;
+    color:white;
+    font-family:Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+
+.box{
+
+    background:#0c2b1c;
+    padding:40px;
+    border-radius:20px;
+    width:90%;
+    max-width:500px;
+    text-align:center;
+    border:1px solid #d4af37;
+
+}
+
+
+h1{
+    color:#d4af37;
+}
+
+
+textarea{
+
+    width:100%;
+    height:220px;
+    margin-top:20px;
+    padding:15px;
+    border-radius:10px;
+    resize:none;
+
+}
+
+
+button{
+
+    margin-top:15px;
+    padding:15px 25px;
+    border:none;
+    border-radius:30px;
+    background:#d4af37;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+<h1>
+Order Confirmed ✅
+</h1>
+
+
+<p>
+Your order has been saved.
+</p>
+
+
+<textarea id="orderText"></textarea>
+
+
+<button onclick="copyOrder()">
+COPY ORDER DETAILS
+</button>
+
+
+<br>
+
+
+<button onclick="openMessenger()">
+OPEN MESSENGER
+</button>
+
+
+</div>
+
+
+
+
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const order = params.get("order");
+
+
+if(order){
+
+    document.getElementById("orderText").value =
+    decodeURIComponent(order);
+
+}else{
+
+    document.getElementById("orderText").value =
+    "No order details found.";
+
+}
+
+
+
+function copyOrder(){
+
+    const text = document.getElementById("orderText").value;
+
+
+    navigator.clipboard.writeText(text)
+    .then(()=>{
+
+        alert("Order copied! Paste it to Messenger.");
+
+    });
+
+
+}
+
+
+
+function openMessenger(){
+
+    const text = document.getElementById("orderText").value;
+
+
+    const messengerURL =
+    "https://m.me/61572153625118?text=" +
+    encodeURIComponent(text);
+
+
+    window.open(
+        messengerURL,
+        "_blank"
+    );
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>

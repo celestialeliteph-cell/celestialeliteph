@@ -417,7 +417,7 @@ function generateOrderID(){
 
 }
 
-// ===============================
+/// ===============================
 // REQUEST YOUR FRAGRANCE BUTTON
 // ===============================
 
@@ -434,6 +434,7 @@ let email = document.getElementById("customer-email")?.value.trim() || "";
 let phone = document.getElementById("customer-phone")?.value.trim() || "";
 
 
+
 // CHECK CART
 
 if(cart.length === 0){
@@ -442,6 +443,7 @@ if(cart.length === 0){
     return;
 
 }
+
 
 
 // CHECK FORM
@@ -465,6 +467,7 @@ if(name === "" || email === "" || phone === ""){
 }
 
 
+
 // PHONE CHECK
 
 if(!/^09\d{9}$/.test(phone)){
@@ -482,6 +485,13 @@ checkoutBtn.textContent = "Sending...";
 
 
 
+// OPEN EMPTY WINDOW FIRST
+// para hindi ma-block ng browser
+
+
+
+
+
 // CREATE ORDER ID
 
 let orderID = generateOrderID();
@@ -489,7 +499,6 @@ let orderID = generateOrderID();
 
 
 let total = 0;
-
 
 let productList = "";
 
@@ -513,6 +522,7 @@ total += subtotal;
 
 
 
+// MESSAGE PARA SA MESSENGER
 
 let orderText = 
 `Hello Celestial Elite! ✨
@@ -522,11 +532,9 @@ I would like to request my fragrance order.
 Order ID:
 ${orderID}
 
-
 Products:
 
 ${productList}
-
 
 TOTAL:
 ₱${total}
@@ -544,19 +552,16 @@ Contact: ${phone}
 
 
 let messengerURL =
-"https://m.me/61572153625118";
+"https://m.me/61572153625118?text=" +
 encodeURIComponent(orderText);
 
 
 
 
-
-// ===============================
-// SAVE TO GOOGLE SHEET FIRST
-// ===============================
-
+// GOOGLE SHEET DATA
 
 const orderData = {
+
 
     orderId: orderID,
 
@@ -572,6 +577,7 @@ const orderData = {
 
     messenger: messengerURL
 
+
 };
 
 
@@ -581,28 +587,38 @@ const orderData = {
 console.log("Sending order:", orderData);
 
 
+
+
 try{
 
+
 let response = await fetch(SCRIPT_URL,{
+
+
     method:"POST",
+
 
     headers:{
 
-        "Content-Type":"text/plain;charset=utf-8"
+
+        "Content-Type":"application/json"
+
 
     },
 
+
     body:JSON.stringify(orderData)
+
 
 });
 
 
 
-let result = await response.json();
+let text = await response.text();
 
+console.log("Google Sheet Response:", text);
 
-
-console.log("Google Sheet:",result);
+let result = JSON.parse(text);
 
 
 
@@ -611,39 +627,39 @@ console.log("Google Sheet:",result);
 if(result.success){
 
 
-
-// OPEN MESSENGER
-
-window.open(messengerURL,"_blank");
-
-
-
-// CLEAR CART
-
-cart = [];
-
-saveCart();
+window.location.href =
+"order-confirmation.html?order=" 
++ encodeURIComponent(orderText);
 
 
 
-// CLEAR FORM
+    // CLEAR CART
 
-document.getElementById("customer-name").value="";
+    cart = [];
 
-document.getElementById("customer-email").value="";
-
-document.getElementById("customer-phone").value="";
+    saveCart();
 
 
 
-showToast("Order sent successfully!");
+    // CLEAR FORM
+
+    document.getElementById("customer-name").value="";
+    document.getElementById("customer-email").value="";
+    document.getElementById("customer-phone").value="";
+
+
+
+    showToast("Order sent successfully!");
 
 
 
 }else{
 
 
-showToast("Failed saving order.");
+    window.location.href =
+    "order-confirmation.html?order=" 
+    + encodeURIComponent(orderText);
+
 
 }
 
@@ -651,12 +667,11 @@ showToast("Failed saving order.");
 
 }catch(error){
 
+    console.error(error);
 
-console.error(error);
-
-
-showToast("Connection error.");
-
+    window.location.href =
+    "order-confirmation.html?order=" 
+    + encodeURIComponent(orderText);
 
 }
 
