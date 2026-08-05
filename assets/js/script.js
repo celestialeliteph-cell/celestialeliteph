@@ -417,18 +417,16 @@ function generateOrderID(){
 
 }
 
-
-
 // ===============================
 // REQUEST YOUR FRAGRANCE BUTTON
 // ===============================
 
-
 const checkoutBtn = document.getElementById("checkout-btn");
+
 
 if(checkoutBtn){
 
-checkoutBtn.addEventListener("click",()=>{
+checkoutBtn.addEventListener("click", async ()=>{
 
 
 let name = document.getElementById("customer-name")?.value.trim() || "";
@@ -436,153 +434,127 @@ let email = document.getElementById("customer-email")?.value.trim() || "";
 let phone = document.getElementById("customer-phone")?.value.trim() || "";
 
 
-// CHECK EMPTY CART
+// CHECK CART
+
 if(cart.length === 0){
 
     showToast("Your cart is empty.");
-
     return;
 
 }
 
-// CHECK FORM FIRST
+
+// CHECK FORM
+
 if(name === "" || email === "" || phone === ""){
 
-    showToast("Please complete the fill up form first before proceeding with your fragrance request.");
+    showToast("Please complete the fill up form first.");
 
     const contactSection = document.getElementById("contact");
 
-if(contactSection){
-    contactSection.scrollIntoView({
-        behavior:"smooth"
-    });
-}
+    if(contactSection){
 
-    return;
+        contactSection.scrollIntoView({
+            behavior:"smooth"
+        });
 
-}
-
-
-// PHONE VALIDATION
-if (!/^09\d{9}$/.test(phone)) {
-
-    showToast("Please enter a valid Philippine mobile number.");
-
-    const phoneField = document.getElementById("customer-phone");
-
-    if(phoneField){
-        phoneField.focus();
     }
 
     return;
 
 }
 
-// Disable 
+
+// PHONE CHECK
+
+if(!/^09\d{9}$/.test(phone)){
+
+    showToast("Please enter a valid Philippine mobile number.");
+
+    return;
+
+}
+
+
+
 checkoutBtn.disabled = true;
 checkoutBtn.textContent = "Sending...";
 
+
+
+// CREATE ORDER ID
+
 let orderID = generateOrderID();
 
-    
-
-const orderIdInput = document.getElementById("order-id");
-
-if (orderIdInput) {
-    orderIdInput.value = orderID;
-}
-
-let orderText = 
-`Hello Celestial Elite! ✨
-I would like to request my fragrance order.
-
-Order ID: ${orderID}
-
-Order Details:
-`;
 
 
 let total = 0;
 
 
+let productList = "";
+
+
+
 cart.forEach(item=>{
 
-    let subtotal = item.price * item.quantity;
 
-    orderText += 
-`• ${item.name}
-  Quantity: ${item.quantity}
-  Subtotal: ₱${subtotal}
+let subtotal = item.price * item.quantity;
 
-`;
 
-    total += subtotal;
+productList += 
+`${item.name} x${item.quantity} - ₱${subtotal}\n`;
+
+
+total += subtotal;
+
 
 });
 
 
-orderText += 
-`TOTAL: ₱${total}\n\n`;
 
 
-orderText += 
-"Customer Information:\n\n";
+
+let orderText = 
+`Hello Celestial Elite! ✨
+
+I would like to request my fragrance order.
+
+Order ID:
+${orderID}
 
 
-orderText += `Name: ${name}\n`;
-orderText += `Email: ${email}\n`;
-orderText += `Contact: ${phone}`;
+Products:
+
+${productList}
 
 
-   let messengerURL =
+TOTAL:
+₱${total}
+
+
+Customer Information:
+
+Name: ${name}
+Email: ${email}
+Contact: ${phone}
+`;
+
+
+
+
+
+let messengerURL =
 "https://m.me/61572153625118?text=" +
 encodeURIComponent(orderText);
 
-// SAVE ORDER TO GOOGLE SHEETS
 
-fetch(SCRIPT_URL, {
 
-    method:"POST",
-
-    headers:{
-        "Content-Type":"application/json"
-    },
-
-    body:JSON.stringify({
-
-        orderId: orderID,
-
-        customer:name,
-
-        email:email,
-
-        phone:phone,
-
-        products:orderText,
-
-        total:total,
-
-        messenger:messengerURL
-
-    })
-
-})
-.then(response => response.json())
-.then(data => {
-
-    console.log("Order Saved:", data);
-
-})
-.catch(error=>{
-
-    console.error("Save Error:", error);
-
-});
 
 
 // ===============================
-// SAVE ORDER TO GOOGLE SHEET
+// SAVE TO GOOGLE SHEET FIRST
 // ===============================
+
 
 const orderData = {
 
@@ -594,7 +566,7 @@ const orderData = {
 
     phone: phone,
 
-    products: orderText,
+    products: productList,
 
     total: total,
 
@@ -603,81 +575,105 @@ const orderData = {
 };
 
 
-fetch(SCRIPT_URL, {
 
-    method: "POST",
 
-    body: JSON.stringify(orderData),
 
-    headers: {
+console.log("Sending order:", orderData);
 
-        "Content-Type": "application/json"
 
-    }
+try{
 
-})
-.then(response => response.json())
-.then(data => {
+let response = await fetch(SCRIPT_URL,{
+    method:"POST",
 
-    console.log("Order Saved:", data);
+    headers:{
 
-})
-.catch(error => {
+        "Content-Type":"application/json"
 
-    console.error("Save Error:", error);
+    },
+
+    body:JSON.stringify(orderData)
 
 });
 
 
 
-// Open Messenger
-const messenger = window.open(messengerURL, "_blank");
+let result = await response.json();
 
-if (messenger) {
-     // Clear cart
-    cart = [];
-    saveCart();
 
-const nameField = document.getElementById("customer-name");
-const emailField = document.getElementById("customer-email");
-const phoneField = document.getElementById("customer-phone");
 
-if(nameField) nameField.value = "";
-if(emailField) emailField.value = "";
-if(phoneField) phoneField.value = "";
+console.log("Google Sheet:",result);
 
-    if (orderIdInput) {
-        orderIdInput.value = "Will be generated automatically";
-    }
 
-    const messageBox = document.getElementById("order-message");
-    if (messageBox) {
-        messageBox.value = "";
-    }
 
-    if(cartSidebar){
 
-    cartSidebar.classList.remove("active");
+
+if(result.success){
+
+
+
+// OPEN MESSENGER
+
+window.open(messengerURL,"_blank");
+
+
+
+// CLEAR CART
+
+cart = [];
+
+saveCart();
+
+
+
+// CLEAR FORM
+
+document.getElementById("customer-name").value="";
+
+document.getElementById("customer-email").value="";
+
+document.getElementById("customer-phone").value="";
+
+
+
+showToast("Order sent successfully!");
+
+
+
+}else{
+
+
+showToast("Failed saving order.");
 
 }
 
-showToast("Thank you! Your fragrance request has been sent.");
 
-    checkoutBtn.disabled = false;
-    checkoutBtn.textContent = "Request Your Fragrance";
 
-} else {
+}catch(error){
 
-    checkoutBtn.disabled = false;
-    checkoutBtn.textContent = "Request Your Fragrance";
 
-    showToast("Unable to open Messenger. Please allow pop-ups and try again.");
+console.error(error);
+
+
+showToast("Connection error.");
+
 
 }
-}); 
 
-} 
 
+
+
+
+checkoutBtn.disabled = false;
+
+checkoutBtn.textContent = "Request Your Fragrance";
+
+
+
+});
+
+
+}
 
 // ===============================
 // IMAGE ZOOM SLIDER
