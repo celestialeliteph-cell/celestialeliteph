@@ -36,7 +36,7 @@ body{
     align-items:center;
 
     background:transparent;
-    backdrop-filter:blur(8px);
+    backdrop-filter:blur(12px);
 
     transition:all .4s ease;
 
@@ -110,7 +110,7 @@ body{
     position:relative;
 
     width:100%;
-    min-height:100vh;
+    min-height:100svh;
 
     background:url("../images/coverphoto.jpg");
     background-size:cover;
@@ -369,10 +369,9 @@ body{
 
 .product-image img{
 
-    position:absolute;
+    position:relative;
 
-    top:0;
-    left:0;
+    display:block;
 
     width:100%;
     height:100%;
@@ -381,8 +380,9 @@ body{
 
     padding:15px;
 
-    transition:.4s ease;
-    cursor: zoom-in;
+    transition:right .3s ease;
+
+    cursor:zoom-in;
 
 }
 
@@ -616,7 +616,7 @@ body{
 .reveal{
     opacity:0;
     transform:translateY(70px);
-    transition:1s ease;
+    transition:.6s ease;
 }
 
 .reveal.active{
@@ -692,6 +692,23 @@ body{
 .fillup button:hover{
 
     background:white;
+
+}
+
+
+@media(hover:none){
+
+.product-card:hover{
+
+transform:none;
+
+}
+
+.add-cart:hover{
+
+transform:none;
+
+}
 
 }
 
@@ -1002,8 +1019,10 @@ body{
 
     padding:18px 35px;
 
-    border:1px solid #d4af37;
+    max-width:90%;
+    text-align:center;
 
+    border:1px solid #d4af37;
     border-left:5px solid #d4af37;
 
     border-radius:15px;
@@ -1156,22 +1175,42 @@ body{
 .next-btn{
 
     position:absolute;
-
     top:50%;
-
     transform:translateY(-50%);
 
+    width:60px;
+    height:60px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
     background:#d4af37;
+    color:#111;
 
     border:none;
-
-    padding:15px 20px;
+    border-radius:50%;
 
     font-size:25px;
 
     cursor:pointer;
 
-    border-radius:50%;
+    z-index:9999999;
+
+    transition:.3s;
+
+}
+
+.prev-btn:hover,
+.next-btn:hover{
+
+    transform:translateY(-50%) scale(1.1);
+
+}
+
+.image-modal img{
+
+    z-index:1;
 
 }
 
@@ -1194,10 +1233,9 @@ body{
 
     .prev-btn,
     .next-btn{
-
-        padding:10px 14px;
-        font-size:18px;
-
+        width:55px;
+        height:55px;
+        font-size:22px;
     }
 
     .prev-btn{
@@ -1209,11 +1247,9 @@ body{
     }
 
     .close-image{
-
         top:15px;
         right:20px;
         font-size:28px;
-
     }
 
 }
@@ -1329,15 +1365,13 @@ body{
 
     .product-image{
 
-        height:300px;
+height:320px;
 
-        display:flex;
+display:flex;
+justify-content:center;
+align-items:center;
 
-        justify-content:center;
-
-        align-items:center;
-
-    }
+}
 
 
 
@@ -1414,4 +1448,12 @@ body{
 
 
 
+}
+
+/* =========================
+   BUTTON TAP FIX
+========================= */
+
+button{
+    -webkit-tap-highlight-color: transparent;
 }
