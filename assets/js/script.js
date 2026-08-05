@@ -599,12 +599,8 @@ let response = await fetch(SCRIPT_URL,{
 
 
     headers:{
-
-
-        "Content-Type":"application/json"
-
-
-    },
+    "Content-Type":"text/plain"
+}
 
 
     body:JSON.stringify(orderData)
