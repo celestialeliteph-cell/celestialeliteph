@@ -621,6 +621,10 @@ console.log("Google Sheet Response:", text);
 let result = JSON.parse(text);
 
 
+console.log("RESULT DATA:", result);
+console.log("SUCCESS:", result.success);
+
+
 
 
 
