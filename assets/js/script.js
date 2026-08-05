@@ -1,26 +1,33 @@
 console.log("Celestial Elite Loaded!");
 
 
-// Google Apps Script Web App
+// ===============================
+// GOOGLE APPS SCRIPT
+// ===============================
+
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-_pFSyeq2E210nUpevqNeM_vKYOaHUFzmr3OIGghOLrIcOgmjwwU1uUXtZQCjR7rzhQ/exec";
+
+
+// ===============================
+// PHONE VALIDATION
+// ===============================
 
 const phoneInput = document.getElementById("customer-phone");
 
-if (phoneInput) {
+if(phoneInput){
 
-    phoneInput.addEventListener("input", function () {
+    phoneInput.addEventListener("input", function(){
 
-        // Numbers only
-        this.value = this.value.replace(/\D/g, "");
+        this.value = this.value.replace(/\D/g,"");
 
-        // Maximum 11 digits
-        if (this.value.length > 11) {
-            this.value = this.value.slice(0, 11);
+        if(this.value.length > 11){
+            this.value = this.value.slice(0,11);
         }
 
     });
 
 }
+
 
 
 // ===============================
@@ -30,26 +37,36 @@ if (phoneInput) {
 const minusButtons = document.querySelectorAll(".minus");
 const plusButtons = document.querySelectorAll(".plus");
 
-minusButtons.forEach(button => {
-    button.addEventListener("click", () => {
+
+minusButtons.forEach(button=>{
+
+    button.addEventListener("click",()=>{
 
         let input = button.parentElement.querySelector("input");
+
         let value = parseInt(input.value) || 0;
 
-        if (value > 0) {
+
+        if(value > 0){
+
             input.value = value - 1;
+
         }
 
     });
+
 });
 
-plusButtons.forEach(button => {
 
-    button.addEventListener("click", () => {
+
+plusButtons.forEach(button=>{
+
+    button.addEventListener("click",()=>{
 
         let input = button.parentElement.querySelector("input");
 
         let value = parseInt(input.value) || 0;
+
         input.value = value + 1;
 
     });
@@ -58,23 +75,26 @@ plusButtons.forEach(button => {
 
 
 
-// =========================================
-// SCROLL REVEAL ANIMATION
-// =========================================
+
+// ===============================
+// SCROLL REVEAL
+// ===============================
 
 const reveals = document.querySelectorAll(".reveal");
 
 
-function reveal() {
+function reveal(){
 
-    reveals.forEach((element) => {
+    reveals.forEach(element=>{
 
-        const windowHeight = window.innerHeight;
-        const revealTop = element.getBoundingClientRect().top;
-        const revealPoint = 120;
+        let windowHeight = window.innerHeight;
+
+        let revealTop = element.getBoundingClientRect().top;
+
+        let revealPoint = 120;
 
 
-        if (revealTop < windowHeight - revealPoint) {
+        if(revealTop < windowHeight - revealPoint){
 
             element.classList.add("active");
 
@@ -85,23 +105,22 @@ function reveal() {
 }
 
 
-// Run on page load
 reveal();
 
-
-// Run while scrolling
-window.addEventListener("scroll", reveal);
+window.addEventListener("scroll",reveal);
 
 
 
-// =========================================
-// NAVBAR SCROLL EFFECT
-// =========================================
+
+// ===============================
+// NAVBAR EFFECT
+// ===============================
 
 const navbar = document.querySelector(".navbar");
 
 
-window.addEventListener("scroll", () => {
+window.addEventListener("scroll",()=>{
+
 
     if(navbar){
 
@@ -117,123 +136,84 @@ window.addEventListener("scroll", () => {
 
     }
 
+
 });
 
+
+
+
 // ===============================
-// SHOPPING CART + LOCAL STORAGE
+// CART SYSTEM
 // ===============================
 
 
-
-// CART OPEN
 const cartSidebar = document.getElementById("cart-sidebar");
 
-document.addEventListener("click", function(e){
-
-    const cartButton = e.target.closest("#cart-btn");
-
-    if(cartButton && cartSidebar){
-
-        cartSidebar.classList.add("active");
-
-    }
-
-});
-
-// CART CLOSE (X BUTTON)
-document.addEventListener("click", function(e){
-
-    const closeButton = e.target.closest("#close-cart");
-
-    if(closeButton && cartSidebar){
-
-        cartSidebar.classList.remove("active");
-
-    }
-
-});
-
-// CLOSE CART WHEN CLICKING OUTSIDE
-document.addEventListener("click", function(e){
-
-    if(
-        cartSidebar &&
-        cartSidebar.classList.contains("active") &&
-        !e.target.closest(".cart-sidebar") &&
-        !e.target.closest("#cart-btn")
-    ){
-
-        cartSidebar.classList.remove("active");
-
-    }
-
-});
-
-// ADD TO CART
-const addCartButtons = document.querySelectorAll(".add-cart");
 const cartItems = document.querySelector(".cart-items");
+
 const cartCount = document.getElementById("cart-count");
+
 const cartTotal = document.getElementById("cart-total");
 
-// Load cart from localStorage
+const addCartButtons = document.querySelectorAll(".add-cart");
+
+
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Display cart immediately
-updateCart();
-updateOrderMessage();
 
-addCartButtons.forEach(button => {
 
-    button.addEventListener("click", () => {
 
-        const productCard = button.closest(".product-card");
 
-        const name = productCard.querySelector("h3")?.textContent || "Unknown Product";
+// OPEN CART
 
-        const price = parseInt(
-    productCard.querySelector(".price")?.textContent.replace("₱","")
-) || 0;
+document.addEventListener("click",e=>{
 
-        const quantity = parseInt(
-    productCard.querySelector(".quantity input")?.value
-) || 0;
 
-        if(quantity <= 0){
-            showToast("Please select a quantity first.");
-            return;
+    if(e.target.closest("#cart-btn")){
+
+
+        if(cartSidebar){
+
+            cartSidebar.classList.add("active");
 
         }
 
-        // Check if product already exists
-        const existing = cart.find(item => item.name === name);
+    }
 
-        if(existing){
 
-            existing.quantity += quantity;
-
-        }else{
-
-            cart.push({
-                name,
-                price,
-                quantity
-            });
-
-        }
-
-        saveCart();
-productCard.querySelector(".quantity input").value = 0;
-showToast(`${name} added to cart`);
-
-if(cartSidebar){
-    cartSidebar.classList.add("active");
-}
-
-    });
 
 });
 
+
+
+
+
+// CLOSE CART
+
+document.addEventListener("click",e=>{
+
+
+    if(e.target.closest("#close-cart")){
+
+
+        if(cartSidebar){
+
+            cartSidebar.classList.remove("active");
+
+        }
+
+    }
+
+
+});
+
+
+
+
+
 function updateCart(){
+
 
     if(!cartItems || !cartTotal || !cartCount){
 
@@ -241,96 +221,83 @@ function updateCart(){
 
     }
 
+
+
     cartItems.innerHTML = "";
 
+
     let total = 0;
+
     let count = 0;
-    
-    
+
+
+
     if(cart.length === 0){
 
-    cartItems.innerHTML = `
 
+        cartItems.innerHTML = `
 
         <div class="empty-cart">
 
-
             <h3>Your cart is empty</h3>
 
-            <p>
-                Add your favorite fragrance<br>
-                and start shopping.
-            </p>
+            <p>Add your favorite fragrance<br>and start shopping.</p>
 
         </div>
 
-    `;
-
-}
-
-    
-
-
-    if(cart.length > 0){
-
-    cart.forEach((item,index)=>{
-
-        total += item.price * item.quantity;
-        count += item.quantity;
-
-        cartItems.innerHTML += `
-            <div class="cart-item">
-
-                <h4>${item.name}</h4>
-
-                <p>₱${item.price} × ${item.quantity}</p>
-
-                <button class="remove-item" data-index="${index}">
-                    Remove
-                </button>
-
-            </div>
         `;
 
-    });
-
-}
-
-
-cartTotal.textContent = "₱" + total;
-cartCount.textContent = count;
-
-    
-
-}
-
-if(cartItems){
-
-cartItems.addEventListener("click", function(e){
-
-    if(e.target.classList.contains("remove-item")){
-
-        const index = Number(e.target.dataset.index);
-
-        cart.splice(index,1);
-
-        saveCart();
-
-        showToast("Item removed from cart.");
 
     }
 
-});
+
+
+    cart.forEach((item,index)=>{
+
+
+        total += item.price * item.quantity;
+
+        count += item.quantity;
+
+
+
+        cartItems.innerHTML += `
+
+        <div class="cart-item">
+
+            <h4>${item.name}</h4>
+
+            <p>₱${item.price} × ${item.quantity}</p>
+
+
+            <button class="remove-item" data-index="${index}">
+                Remove
+            </button>
+
+
+        </div>
+
+        `;
+
+
+
+    });
+
+
+
+    cartTotal.textContent = "₱"+total;
+
+    cartCount.textContent = count;
+
+
 
 }
-
-
 
 
 
 function saveCart(){
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart",JSON.stringify(cart));
 
     updateCart();
 
@@ -338,183 +305,97 @@ function saveCart(){
 
 }
 
-function updateOrderMessage(){
 
-    const messageBox = document.getElementById("order-message");
 
-    if(!messageBox) return;
+updateCart();
 
-    if(cart.length === 0){
-    messageBox.value = "";
-    return;
-}
 
-    let orderText = "Order Details:\n\n";
-    let total = 0;
+// ===============================
+// ADD TO CART
+// ===============================
 
-    cart.forEach(item=>{
+addCartButtons.forEach(button=>{
 
-        let subtotal = item.price * item.quantity;
+    button.addEventListener("click",()=>{
 
-        orderText += `${item.name} x${item.quantity} - ₱${subtotal}\n`;
 
-        total += subtotal;
+        const productCard = button.closest(".product-card");
+
+
+        const name = productCard.querySelector("h3")?.textContent.trim() || "Unknown";
+
+
+        const price = parseInt(
+            productCard.querySelector(".price")?.textContent.replace("₱","")
+        ) || 0;
+
+
+
+        const quantity = parseInt(
+            productCard.querySelector(".quantity input")?.value
+        ) || 0;
+
+
+
+        if(quantity <= 0){
+
+            showToast("Please select a quantity first.");
+
+            return;
+
+        }
+
+
+
+
+        const existing = cart.find(item=>item.name === name);
+
+
+
+        if(existing){
+
+            existing.quantity += quantity;
+
+
+        }else{
+
+
+            cart.push({
+
+                name:name,
+
+                price:price,
+
+                quantity:quantity
+
+            });
+
+
+        }
+
+
+
+
+        saveCart();
+
+
+
+        productCard.querySelector(".quantity input").value = 0;
+
+
+        showToast(name+" added to cart");
+
+
+
+        if(cartSidebar){
+
+            cartSidebar.classList.add("active");
+
+        }
+
+
 
     });
-
-    orderText += `\nTotal: ₱${total}`;
-
-    messageBox.value = orderText;
-
-}
-
-
-
-
-// ===============================
-// TOAST NOTIFICATION
-// ===============================
-
-const toast = document.getElementById("toast");
-
-
-function showToast(message){
-
-    if(!toast) return;
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    setTimeout(()=>{
-
-        toast.classList.remove("show");
-
-    },2500);
-
-}
-
-
-// ===============================
-// GENERATE ORDER ID
-// ===============================
-
-function generateOrderID(){
-
-    let date = new Date();
-
-    let year = date.getFullYear().toString().slice(-2);
-    let month = String(date.getMonth()+1).padStart(2,"0");
-    let day = String(date.getDate()).padStart(2,"0");
-
-    let random = Math.random()
-    .toString(36)
-    .substring(2,6)
-    .toUpperCase();
-
-
-    return `CE-${year}${month}${day}-${random}`;
-
-}
-
-/// ===============================
-// REQUEST YOUR FRAGRANCE BUTTON
-// ===============================
-
-const checkoutBtn = document.getElementById("checkout-btn");
-
-
-if(checkoutBtn){
-
-checkoutBtn.addEventListener("click", async ()=>{
-
-
-let name = document.getElementById("customer-name")?.value.trim() || "";
-let email = document.getElementById("customer-email")?.value.trim() || "";
-let phone = document.getElementById("customer-phone")?.value.trim() || "";
-
-
-
-// CHECK CART
-
-if(cart.length === 0){
-
-    showToast("Your cart is empty.");
-    return;
-
-}
-
-
-
-// CHECK FORM
-
-if(name === "" || email === "" || phone === ""){
-
-    showToast("Please complete the fill up form first.");
-
-    const contactSection = document.getElementById("contact");
-
-    if(contactSection){
-
-        contactSection.scrollIntoView({
-            behavior:"smooth"
-        });
-
-    }
-
-    return;
-
-}
-
-
-
-// PHONE CHECK
-
-if(!/^09\d{9}$/.test(phone)){
-
-    showToast("Please enter a valid Philippine mobile number.");
-
-    return;
-
-}
-
-
-
-checkoutBtn.disabled = true;
-checkoutBtn.textContent = "Sending...";
-
-
-
-// OPEN EMPTY WINDOW FIRST
-// para hindi ma-block ng browser
-
-
-
-
-
-// CREATE ORDER ID
-
-let orderID = generateOrderID();
-
-
-
-let total = 0;
-
-let productList = "";
-
-
-
-cart.forEach(item=>{
-
-
-let subtotal = item.price * item.quantity;
-
-
-productList += 
-`${item.name} x${item.quantity} - ₱${subtotal}\n`;
-
-
-total += subtotal;
 
 
 });
@@ -522,19 +403,342 @@ total += subtotal;
 
 
 
-// MESSAGE PARA SA MESSENGER
 
-let orderText = 
-`Hello Celestial Elite! ✨
+
+// ===============================
+// REMOVE CART ITEM
+// ===============================
+
+
+if(cartItems){
+
+
+    cartItems.addEventListener("click",e=>{
+
+
+        if(e.target.classList.contains("remove-item")){
+
+
+            let index = Number(e.target.dataset.index);
+
+
+            cart.splice(index,1);
+
+
+            saveCart();
+
+
+            showToast("Item removed from cart.");
+
+
+        }
+
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+// ===============================
+// ORDER MESSAGE DISPLAY
+// ===============================
+
+
+function updateOrderMessage(){
+
+
+    const messageBox = document.getElementById("order-message");
+
+
+    if(!messageBox){
+
+        return;
+
+    }
+
+
+
+    if(cart.length === 0){
+
+        messageBox.value = "";
+
+        return;
+
+    }
+
+
+
+    let text = "Order Details:\n\n";
+
+
+    let total = 0;
+
+
+
+    cart.forEach(item=>{
+
+
+        let subtotal = item.price * item.quantity;
+
+
+
+        text += `${item.name} x${item.quantity} - ₱${subtotal}\n`;
+
+
+
+        total += subtotal;
+
+
+
+    });
+
+
+
+    text += `\nTotal: ₱${total}`;
+
+
+
+    messageBox.value = text;
+
+
+
+}
+
+
+
+
+
+
+
+// ===============================
+// TOAST
+// ===============================
+
+
+const toast = document.getElementById("toast");
+
+
+
+function showToast(message){
+
+
+    if(!toast){
+
+        return;
+
+    }
+
+
+
+    toast.textContent = message;
+
+
+    toast.classList.add("show");
+
+
+
+    setTimeout(()=>{
+
+
+        toast.classList.remove("show");
+
+
+    },2500);
+
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// GENERATE ORDER ID
+// ===============================
+
+
+function generateOrderID(){
+
+
+    let date = new Date();
+
+
+
+    let year = date.getFullYear().toString().slice(-2);
+
+    let month = String(date.getMonth()+1).padStart(2,"0");
+
+    let day = String(date.getDate()).padStart(2,"0");
+
+
+
+    let random = Math.random()
+    .toString(36)
+    .substring(2,6)
+    .toUpperCase();
+
+
+
+    return `CE-${year}${month}${day}-${random}`;
+
+
+
+}
+
+
+
+
+
+
+// ===============================
+// CHECKOUT SYSTEM
+// ===============================
+
+
+const checkoutBtn = document.getElementById("checkout-btn");
+
+
+
+if(checkoutBtn){
+
+
+checkoutBtn.addEventListener("click",async()=>{
+
+
+
+    let name =
+    document.getElementById("customer-name")?.value.trim() || "";
+
+
+
+    let email =
+    document.getElementById("customer-email")?.value.trim() || "";
+
+
+
+    let phone =
+    document.getElementById("customer-phone")?.value.trim() || "";
+
+
+
+
+
+    if(cart.length === 0){
+
+        showToast("Your cart is empty.");
+
+        return;
+
+    }
+
+
+
+
+
+    if(name === "" || email === "" || phone === ""){
+
+
+        showToast("Please complete the fill up form first.");
+
+
+        document.getElementById("contact")?.scrollIntoView({
+
+            behavior:"smooth"
+
+        });
+
+
+
+        return;
+
+
+    }
+
+
+
+
+
+    if(!/^09\d{9}$/.test(phone)){
+
+
+        showToast("Invalid Philippine mobile number.");
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+    checkoutBtn.disabled = true;
+
+
+    checkoutBtn.textContent = "Sending...";
+
+
+
+
+
+    let orderID = generateOrderID();
+
+
+
+    let total = 0;
+
+    let products = "";
+
+
+
+
+
+    cart.forEach(item=>{
+
+
+        let subtotal = item.price * item.quantity;
+
+
+        products += `${item.name} x${item.quantity} - ₱${subtotal}\n`;
+
+
+        total += subtotal;
+
+
+
+    });
+
+
+
+
+
+
+
+    let orderText = `Hello Celestial Elite! ✨
 
 I would like to request my fragrance order.
 
 Order ID:
 ${orderID}
 
+
 Products:
 
-${productList}
+${products}
+
 
 TOTAL:
 ₱${total}
@@ -543,153 +747,134 @@ TOTAL:
 Customer Information:
 
 Name: ${name}
+
 Email: ${email}
-Contact: ${phone}
-`;
+
+Contact: ${phone}`;
 
 
 
 
 
-let messengerURL =
-"https://m.me/61572153625118?text=" +
-encodeURIComponent(orderText);
-
-
-
-
-// GOOGLE SHEET DATA
-
-const orderData = {
-
-
-    orderId: orderID,
-
-    customer: name,
-
-    email: email,
-
-    phone: phone,
-
-    products: productList,
-
-    total: total,
-
-    messenger: messengerURL
-
-
-};
+    let messengerURL =
+    "https://m.me/61572153625118?text="+
+    encodeURIComponent(orderText);
 
 
 
 
 
-console.log("Sending order:", orderData);
+    let orderData = {
+
+
+        orderId:orderID,
+
+        customer:name,
+
+        email:email,
+
+        phone:phone,
+
+        products:products,
+
+        total:total,
+
+        messenger:messengerURL
+
+
+    };
 
 
 
 
-try{
+
+    try{
 
 
-let response = await fetch(SCRIPT_URL,{
+        let response = await fetch(SCRIPT_URL,{
 
-    method:"POST",
+            method:"POST",
 
-    headers:{
-        "Content-Type":"application/json"
-    },
+            headers:{
 
-    body:JSON.stringify(orderData)
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify(orderData)
+
+
+        });
+
+
+
+
+        let result = await response.json();
+
+
+
+
+        if(result.success){
+
+
+            showToast("Order saved successfully!");
+
+
+            cart=[];
+
+
+            saveCart();
+
+
+
+            window.location.href =
+            "/celestialeliteph/order-confirmation.html?order="
+            +encodeURIComponent(orderText);
+
+
+
+        }else{
+
+
+            showToast("Order failed.");
+
+        }
+
+
+
+
+
+    }catch(error){
+
+
+        console.error(error);
+
+
+        showToast("Google Sheet connection failed.");
+
+
+    }
+
+
+
+
+    checkoutBtn.disabled=false;
+
+    checkoutBtn.textContent="Request Your Fragrance";
+
+
+
+
 
 });
 
 
 
-let text = await response.text();
-
-console.log("Google Sheet Response:", text);
-
-
-
-let result = JSON.parse(text);
-
-
-console.log("RESULT DATA:", result);
-console.log("SUCCESS:", result.success);
-
-
-
-if(result.success){
-
-
-    console.log("ORDER SAVED SUCCESSFULLY");
-
-
-    // CLEAR CART
-
-    cart = [];
-
-    saveCart();
-
-
-
-    // CLEAR FORM
-
-    const nameInput = document.getElementById("customer-name");
-    const emailInput = document.getElementById("customer-email");
-    const phoneInput = document.getElementById("customer-phone");
-
-
-    if(nameInput) nameInput.value="";
-    if(emailInput) emailInput.value="";
-    if(phoneInput) phoneInput.value="";
-
-
-
-    showToast("Order sent successfully!");
-
-
-
-    window.location.href =
-    "/celestialeliteph/order-confirmation.html?order="
-    + encodeURIComponent(orderText);
-
-
-
-}else{
-
-
-    console.log("SHEET FAILED:", result);
-
-
-    showToast("Order not saved.");
-
-
 }
 
-
-
-}catch(error){
-
-
-    console.error("FETCH ERROR:", error);
-
-
-    showToast("Google Sheet connection failed.");
-
-
-}
-
-
-
-checkoutBtn.disabled = false;
-
-checkoutBtn.textContent = "Request Your Fragrance";
 // ===============================
 // IMAGE ZOOM SLIDER
 // ===============================
-
 
 let zoomImages = [];
 
@@ -699,9 +884,11 @@ let zoomIndex = 0;
 
 function openZoom(image){
 
+
     const modal = document.getElementById("image-modal");
 
     const zoomImage = document.getElementById("zoom-image");
+
 
 
     if(!modal || !zoomImage){
@@ -711,21 +898,31 @@ function openZoom(image){
     }
 
 
+
+
     zoomImages = image.dataset.images.split(",");
 
 
-    zoomImages = zoomImages.map(img => img.trim());
+
+    zoomImages = zoomImages.map(img=>img.trim());
+
 
 
     zoomIndex = 0;
 
 
+
     zoomImage.src = zoomImages[zoomIndex];
+
 
 
     modal.classList.add("active");
 
+
+
 }
+
+
 
 
 
@@ -733,7 +930,10 @@ function openZoom(image){
 
 function closeZoom(){
 
+
     const modal = document.getElementById("image-modal");
+
+
 
     if(modal){
 
@@ -741,7 +941,11 @@ function closeZoom(){
 
     }
 
+
 }
+
+
+
 
 
 
@@ -749,9 +953,18 @@ function closeZoom(){
 
 function nextImage(){
 
-    if(zoomImages.length === 0) return;
+
+    if(zoomImages.length === 0){
+
+        return;
+
+    }
+
+
 
     zoomIndex++;
+
+
 
     if(zoomIndex >= zoomImages.length){
 
@@ -759,7 +972,12 @@ function nextImage(){
 
     }
 
+
+
+
     const zoomImage = document.getElementById("zoom-image");
+
+
 
     if(zoomImage){
 
@@ -767,14 +985,31 @@ function nextImage(){
 
     }
 
+
+
 }
+
+
+
+
+
+
 
 
 function prevImage(){
 
-    if(zoomImages.length === 0) return;
+
+    if(zoomImages.length === 0){
+
+        return;
+
+    }
+
+
 
     zoomIndex--;
+
+
 
     if(zoomIndex < 0){
 
@@ -782,7 +1017,12 @@ function prevImage(){
 
     }
 
+
+
+
     const zoomImage = document.getElementById("zoom-image");
+
+
 
     if(zoomImage){
 
@@ -790,44 +1030,96 @@ function prevImage(){
 
     }
 
+
+
 }
 
 
+
+
+
+
+
+
 // ===============================
-// CLOSE IMAGE WHEN CLICKING BACKGROUND
+// CLOSE IMAGE BACKGROUND CLICK
 // ===============================
+
 
 const modal = document.getElementById("image-modal");
 
+
+
 if(modal){
 
-    modal.addEventListener("click", function(e){
+
+    modal.addEventListener("click",function(e){
+
 
         if(e.target === modal){
 
+
             closeZoom();
+
 
         }
 
+
     });
+
 
 }
 
 
+
+
+
+
+
+
 // ===============================
-// CLOSE IMAGE USING ESC KEY
+// ESC KEY CLOSE
 // ===============================
 
-document.addEventListener("keydown", function(e){
 
-    if(e.key !== "Escape") return;
+document.addEventListener("keydown",function(e){
+
+
+
+    if(e.key !== "Escape"){
+
+        return;
+
+    }
+
+
+
 
     const modal = document.getElementById("image-modal");
 
+
+
     if(modal && modal.classList.contains("active")){
+
+
         closeZoom();
-    }else if(cartSidebar && cartSidebar.classList.contains("active")){
+
+
+    }
+    else if(cartSidebar && cartSidebar.classList.contains("active")){
+
+
         cartSidebar.classList.remove("active");
+
+
     }
 
+
+
 });
+
+
+
+
+
+console.log("SCRIPT END OK");
