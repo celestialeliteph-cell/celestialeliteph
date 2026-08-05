@@ -594,17 +594,13 @@ try{
 
 let response = await fetch(SCRIPT_URL,{
 
-
     method:"POST",
 
-
     headers:{
-    "Content-Type":"text/plain"
-}
-
+        "Content-Type":"application/json"
+    },
 
     body:JSON.stringify(orderData)
-
 
 });
 
@@ -614,6 +610,8 @@ let text = await response.text();
 
 console.log("Google Sheet Response:", text);
 
+
+
 let result = JSON.parse(text);
 
 
@@ -622,15 +620,10 @@ console.log("SUCCESS:", result.success);
 
 
 
-
-
 if(result.success){
 
 
-window.location.href =
-"/celestialeliteph/order-confirmation.html?order=" 
-+ encodeURIComponent(orderText);
-
+    console.log("ORDER SAVED SUCCESSFULLY");
 
 
     // CLEAR CART
@@ -643,9 +636,14 @@ window.location.href =
 
     // CLEAR FORM
 
-    document.getElementById("customer-name").value="";
-    document.getElementById("customer-email").value="";
-    document.getElementById("customer-phone").value="";
+    const nameInput = document.getElementById("customer-name");
+    const emailInput = document.getElementById("customer-email");
+    const phoneInput = document.getElementById("customer-phone");
+
+
+    if(nameInput) nameInput.value="";
+    if(emailInput) emailInput.value="";
+    if(phoneInput) phoneInput.value="";
 
 
 
@@ -653,12 +651,19 @@ window.location.href =
 
 
 
-}else{
-
-
     window.location.href =
     "/celestialeliteph/order-confirmation.html?order="
     + encodeURIComponent(orderText);
+
+
+
+}else{
+
+
+    console.log("SHEET FAILED:", result);
+
+
+    showToast("Order not saved.");
 
 
 }
@@ -667,29 +672,20 @@ window.location.href =
 
 }catch(error){
 
-    console.error(error);
 
-    window.location.href =
-    "/celestialeliteph/order-confirmation.html?order="
-    + encodeURIComponent(orderText);
+    console.error("FETCH ERROR:", error);
+
+
+    showToast("Google Sheet connection failed.");
+
 
 }
-
-
 
 
 
 checkoutBtn.disabled = false;
 
 checkoutBtn.textContent = "Request Your Fragrance";
-
-
-
-});
-
-
-}
-
 // ===============================
 // IMAGE ZOOM SLIDER
 // ===============================
