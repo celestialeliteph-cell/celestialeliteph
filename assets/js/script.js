@@ -538,6 +538,48 @@ orderText += `Contact: ${phone}`;
 "https://m.me/61572153625118?text=" +
 encodeURIComponent(orderText);
 
+// SAVE ORDER TO GOOGLE SHEETS
+
+fetch(SCRIPT_URL, {
+
+    method:"POST",
+
+    headers:{
+        "Content-Type":"application/json"
+    },
+
+    body:JSON.stringify({
+
+        orderId: orderID,
+
+        customer:name,
+
+        email:email,
+
+        phone:phone,
+
+        products:orderText,
+
+        total:total,
+
+        messenger:messengerURL
+
+    })
+
+})
+.then(response => response.json())
+.then(data => {
+
+    console.log("Order Saved:", data);
+
+})
+.catch(error=>{
+
+    console.error("Save Error:", error);
+
+});
+
+
 // ===============================
 // SAVE ORDER TO GOOGLE SHEET
 // ===============================
